@@ -1,5 +1,3 @@
-using System.Collections;
-using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +15,7 @@ public class DisplayTimer : MonoBehaviour
     {
         _timer.ValueChanged += DispleyCount;
     }
+
     private void OnDisable()
     {
         _timer.ValueChanged -= DispleyCount;

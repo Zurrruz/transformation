@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Timer : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private int _maxCount;
+
     private bool _isClicked;
     private int _count;
     private float _delay;
+
     private Coroutine _coroutine;
 
     public event Action<float> ValueChanged;
@@ -21,24 +21,25 @@ public class Timer : MonoBehaviour, IPointerClickHandler
         _count = 0;
         _isClicked = true;
     }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_isClicked)
-            _coroutine = StartCoroutine(Count(_delay, _count));
+            _coroutine = StartCoroutine(Count(_delay));
         else
             if (_coroutine != null)
-                StopCoroutine(_coroutine);
+            StopCoroutine(_coroutine);
 
         _isClicked = !_isClicked;
     }
 
-    private IEnumerator Count(float delay, int start)
+    private IEnumerator Count(float delay)
     {
         var wait = new WaitForSeconds(delay);
 
-        for (int i = start; i < _maxCount; i++)
+        while (_count < _maxCount)
         {
-            _count = i;
+            _count++;
             ValueChanged?.Invoke(_count);
             yield return wait;
         }
