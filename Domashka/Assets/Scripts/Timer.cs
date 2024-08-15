@@ -24,13 +24,23 @@ public class Timer : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_isClicked)
-            _coroutine = StartCoroutine(Count(_delay));
-        else
-            if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        StartWork();
+        StopWork();
 
         _isClicked = !_isClicked;
+    }
+
+    private void StartWork()
+    {
+        if (_isClicked)
+            _coroutine = StartCoroutine(Count(_delay));
+    }
+
+    private void StopWork()
+    {
+        if (_isClicked == false)
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
     }
 
     private IEnumerator Count(float delay)
@@ -45,3 +55,5 @@ public class Timer : MonoBehaviour, IPointerClickHandler
         }
     }
 }
+
+
